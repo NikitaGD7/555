@@ -1,0 +1,55 @@
+@Test
+public void testRemoveSubtask() {
+    Epic epic = new Epic("Epic 1", "This is an epic");
+    taskManager.addNewEpic(epic);
+    SubTask subtask1 = new SubTask("Subtask 1", "NEW", epic.getId());
+    SubTask subtask2 = new SubTask("Subtask 2", "IN_PROGRESS", epic.getId());
+    taskManager.addNewSubtask(subtask1);
+    taskManager.addNewSubtask(subtask2);
+    taskManager.removeSubtask(subtaskgetId());
+    List<SubTask> subtasks = taskManager.getSubtasks();
+    assertFalse(subtasks.contains(subtask1), "The subtask was not removed.");
+}
+
+@Test
+public void testRemoveEpic() {
+    Epic epic = new Epic("Epic 1", "This is an epic");
+    taskManager.addNewEpic(epic);
+    SubTask subtask1 = new SubTask("Subtask 1", "NEW", epic.getId());
+    taskManager.addNewSubtask(subtask1);
+    taskManager.removeEpic(epic.getId());
+    List<SubTask> subtasks = taskManager.getSubtasks();
+    assertFalse(subtasks.contains(subtask1), "The subtask was not removed when its epic was deleted.");
+}
+
+@Test
+public void testUpdateTask() {
+    Task task = new Task("Model.Task", "NEW");
+    task.setId(1);
+    taskManager.addNewTask(task);
+    task.setName("Updated Task");
+    taskManager.updateTask(task);
+    assertEquals("Updated Task", taskManager.getTask(1).getName(), "The task name was not updated.");
+}
+
+@Test
+public void testUpdateEpic() {
+    Epic epic = new Epic("Epic 1", "This is an epic");
+    epic.setId(1);
+    taskManager.addNewEpic(epic);
+    epic.setName("Updated Epic");
+    taskManager.updateEpic(epic);
+    assertEquals("Updated Epic", taskManager.getEpic(1).getName(), "The epic name was not updated.");
+}
+
+@Test
+public void testUpdateSubtask() {
+    Epic epic = new Epic("Epic 1", "This is an epic");
+    taskManager.addNewEpic(epic);
+    SubTask subtask = new SubTask("Subtask 1", "NEW", epic.getId());
+    subtask.setId(1);
+    taskManager.addNewSubtask(subtask);
+    subtask.setName("Updated Subtask");
+    taskManager.updateSubtask(subtask);
+    assertEquals("Updated Subtask", taskManager.getSubTask(1).getName(), "The subtask name was not updated.");
+}
